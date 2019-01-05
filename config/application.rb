@@ -15,5 +15,9 @@ module MrMessenger
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
     # the framework and any gems in your application.
+
+    # Setting the timezone to JST
+    # https://qiita.com/d-mato/items/2be9466b2d768f1ba055
+    config.time_zone = 'Tokyo'
   end
 end
