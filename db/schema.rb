@@ -14,12 +14,14 @@ ActiveRecord::Schema.define(version: 2019_01_05_034631) do
 
   create_table "messages", force: :cascade do |t|
     t.datetime "scheduled_date_time"
-    t.integer "sender_number"
-    t.integer "receiver_number"
+    t.string "sender_number"
+    t.string "receiver_number"
     t.string "content"
     t.datetime "sent_date_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["scheduled_date_time"], name: "index_messages_on_scheduled_date_time"
+    t.index ["sent_date_time"], name: "index_messages_on_sent_date_time"
   end
 
 end
