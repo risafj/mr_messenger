@@ -5,7 +5,7 @@ class MessagesController < ApplicationController
     new_message = Message.new(
       scheduled_date_time: message_params[:scheduled_date_time],
       sender_number: message_params[:sender_number],
-      receiver_number: [:receiver_number],
+      receiver_number: message_params[:receiver_number],
       content: message_params[:content]
     )
 
@@ -21,13 +21,6 @@ class MessagesController < ApplicationController
   end
 
   private
-
-  # def create_return_json(error_check_object, success_message)
-  #   if error_check_object.errors.messages.presence
-  #     error_check_object.errors.messages, status: :bad_request
-  #   else { message: success_message }
-  #   end
-  # end
 
   def message_params
     params.require(:message).permit(:scheduled_date_time, :sender_number, :receiver_number, :content)
