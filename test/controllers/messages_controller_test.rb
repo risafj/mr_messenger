@@ -20,7 +20,9 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'should delete message' do
-    # delete 'messages/', params: Message.first.id
+    assert_not Message.first.id.nil?
+    delete "/messages/#{Message.first.id}/"
+    assert_response :success
   end
 
   test 'delete request should return status 400 if id does not exist' do
