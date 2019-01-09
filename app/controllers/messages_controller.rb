@@ -21,11 +21,10 @@ class MessagesController < ApplicationController
 
   def delete
     message_to_delete = Message.find(params[:id])
-    if message_to_delete.destroy
-      render json: { message: 'Your message has been deleted successfully.' }
-    else
-      render json: message_to_delete.errors.messages, status: :bad_request
-    end
+  rescue StandardError
+    render status: :bad_request
+  else
+    message_to_delete.destroy
   end
 
   private
