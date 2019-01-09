@@ -1,13 +1,28 @@
 require 'test_helper'
 
 class MessagesControllerTest < ActionDispatch::IntegrationTest
-  # test 'should get create' do
-  #   get messages_create_url
-  #   assert_response :success
-  # end
+  def setup
+    Rails.application.load_seed
+    @message_params = {
+      message: {
+        scheduled_date_time: '2019-01-10 22:00:00',
+        sender_number: '+123456789',
+        receiver_number: '+987654321',
+        content: 'controller test'
+      }
+    }
+  end
 
-  # test 'should get delete' do
-  #   get messages_delete_url
-  #   assert_response :success
-  # end
+  test 'should create message' do
+    post '/messages/', params: @message_params
+    assert_response :success
+    assert response.body.include? 'id'
+  end
+
+  test 'should delete message' do
+    # delete 'messages/', params: Message.first.id
+  end
+
+  test 'delete request should return status 400 if id does not exist' do
+  end
 end

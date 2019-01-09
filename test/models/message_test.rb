@@ -28,7 +28,7 @@ class MessageTest < ActiveSupport::TestCase
       scheduled_date_time: '2019-01-10 22:00:00',
       sender_number: 'abc',
       receiver_number: '+987654321',
-      content: 'testing'
+      content: 'terry folds'
     )
     assert_not incorrect_number_msg.save
 
