@@ -10,14 +10,22 @@ class MessagesController < ApplicationController
     )
 
     if new_message.save
-      render json: { message: 'Message successfully scheduled' }
+      render json: {
+        id: new_message.id,
+        message: 'Your message has been scheduled successfully.'
+      }
     else
       render json: new_message.errors.messages, status: :bad_request
     end
   end
 
   def delete
-    # message_to_delete = ...
+    message_to_delete = Message.find(params[:id])
+    if message_to_delete.destroy
+      render json: { message: 'Your message has been deleted successfully.' }
+    else
+      render json: message_to_delete.errors.messages, status: :bad_request
+    end
   end
 
   private
