@@ -13,5 +13,7 @@ namespace :batch do
         body: batch_messages[n].content
       )
     end
+
+    batch_messages.update_all(sent_date_time: DateTime.current)
   end
 end
