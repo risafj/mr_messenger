@@ -6,4 +6,8 @@ Twilio.configure do |config|
   config.auth_token = Rails.application.credentials.twilio_auth_token
 end
 
-TwilioClient = Twilio::REST::Client.new
+module TwilioClient
+  def twilio_client
+    Twilio::REST::Client.new
+  end
+end
