@@ -72,3 +72,5 @@ gem 'twilio-ruby'
 gem 'whenever', require: false
 
 gem 'devise_token_auth'
+
+gem 'activeadmin'

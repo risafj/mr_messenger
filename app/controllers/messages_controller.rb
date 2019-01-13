@@ -1,4 +1,4 @@
-class MessagesController < ApplicationController
+class MessagesController < ApiController
   skip_before_action :verify_authenticity_token
   # Below line is for devise to check if user is logged in.
   before_action :authenticate_user!
