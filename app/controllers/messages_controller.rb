@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
   skip_before_action :verify_authenticity_token
+  # Below line is for devise to check if user is logged in.
+  before_action :authenticate_user!
 
   def create
     new_message = Message.new(
