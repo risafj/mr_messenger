@@ -6,8 +6,6 @@ Twilio.configure do |config|
   config.auth_token = Rails.application.credentials.twilio_auth_token
 end
 
-module TwilioClient
-  def twilio_client
-    Twilio::REST::Client.new
-  end
-end
+# Defining a camelCase variable like below in initializers allows you to access the variable in other files.
+# Similar to using a module.
+TwilioClient = Twilio::REST::Client.new
