@@ -9,11 +9,11 @@ class AuthorizationTest < ActionDispatch::IntegrationTest
   end
 
   test 'sign up and log in user one' do
-    @user_one = { email: 'userone@test.com', password: 'userone' }
-    sign_up(@user_one)
+    user_one = { email: 'userone@test.com', password: 'userone' }
+    sign_up(user_one)
     assert_response :success
 
-    get_auth_headers(@user_one)
+    get_auth_headers(user_one)
     assert_response :success
   end
 end

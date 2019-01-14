@@ -6,10 +6,12 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
 
   def setup
     Rails.application.load_seed
+    test_user = { email: 'user@test.com', password: 'testuser' }
+    sign_up(test_user)
+    @response_headers = get_auth_headers(test_user)
   end
 
   test 'should create message' do
-    # Authorise
     post '/messages/',
          params: {
            message: {
@@ -18,24 +20,23 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
              receiver_number: '+987654321',
              content: 'controller test'
            }
-         }
+         },
+         headers: @response_headers
+
     assert_response :success
     assert response.body.include? 'id'
   end
 
   test 'should delete message' do
-    # Authorise
-
     # Seeds have been loaded at setup, so Message.first should not be nil.
     assert_not Message.first.id.nil?
-    delete "/messages/#{Message.first.id}/"
+    delete "/messages/#{Message.first.id}/", headers: @response_headers
     assert_response :success
   end
 
   test 'delete request should return status 400 if id does not exist' do
-    # Authorise
     assert Message.where(id: '9999999').blank?
-    delete '/messages/9999999/'
+    delete '/messages/9999999/', headers: @response_headers
     assert_response :bad_request
   end
 end
