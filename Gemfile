@@ -5,8 +5,12 @@ ruby '2.5.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.2'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# Use sqlite3 as the database for Active Record -> Commenting it out to switch to mysql
+# gem 'sqlite3'
+# Use mysql for the db.
+# If installation fails at first, run the command specified here first:
+# https://stackoverflow.com/questions/30834421/error-when-trying-to-install-app-with-mysql2-gem/39628463#39628463
+gem 'mysql2', '~> 0.5.2'
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
 # Use SCSS for stylesheets
@@ -69,8 +73,11 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'twilio-ruby'
 
+# For running cron jobs.
 gem 'whenever', require: false
 
+# For adding log-in authentication using tokens i/o cookies (necessary when using API).
 gem 'devise_token_auth'
 
+# For creating admin panel.
 gem 'activeadmin'

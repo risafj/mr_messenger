@@ -11,4 +11,7 @@ ActiveAdmin.register Message do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+
+  # Move 'Messages' up to the beginning in the dashboard menu.
+  menu priority: 1
 end
