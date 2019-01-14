@@ -5,10 +5,9 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
   include AuthorizationHelper
 
   def setup
-    Rails.application.load_seed
     test_user = { email: 'user@test.com', password: 'testuser' }
     sign_up(test_user)
-    @response_headers = get_auth_headers(test_user)
+    @auth_headers = get_auth_headers(test_user)
   end
 
   test 'should create message' do
@@ -21,22 +20,22 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
              content: 'controller test'
            }
          },
-         headers: @response_headers
+         headers: @auth_headers
 
     assert_response :success
-    assert response.body.include? 'id'
+    assert JSON.parse(response.body)['id'].present? && JSON.parse(response.body)['message'].present?
   end
 
   test 'should delete message' do
-    # Seeds have been loaded at setup, so Message.first should not be nil.
-    assert_not Message.first.id.nil?
-    delete "/messages/#{Message.first.id}/", headers: @response_headers
+    # Seeds have been loaded, so Message.first should not be nil.
+    assert_not Message.first.nil?
+    delete "/messages/#{Message.first.id}/", headers: @auth_headers
     assert_response :success
   end
 
   test 'delete request should return status 400 if id does not exist' do
     assert Message.where(id: '9999999').blank?
-    delete '/messages/9999999/', headers: @response_headers
+    delete '/messages/9999999/', headers: @auth_headers
     assert_response :bad_request
   end
 end

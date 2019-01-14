@@ -11,5 +11,7 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  # Load seeds for all tests.
+  # https://stackoverflow.com/questions/1574797/how-to-load-dbseed-data-into-test-database-automatically
+  load Rails.root.join('db', 'seeds.rb')
 end

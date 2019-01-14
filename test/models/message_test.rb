@@ -5,7 +5,7 @@ class MessageTest < ActiveSupport::TestCase
   include MessageHelper
 
   test 'does not save if required fields are blank' do
-    message = msg_content_missing
+    message = invalid_message_no_content
     assert_not message.save
 
     message.update(content: 'hiya')
@@ -13,9 +13,8 @@ class MessageTest < ActiveSupport::TestCase
   end
 
   test 'does not save if longer than 100 characters' do
-    message = msg_content_missing
-    message.update(content:
-      'I need more than one hundred characters in this test message so that it cannot be saved in the database.')
+    message = invalid_message_no_content
+    message.update(content: 'a' * 101)
 
     assert_not message.save
 
@@ -34,6 +33,9 @@ class MessageTest < ActiveSupport::TestCase
 
     incorrect_number_msg.update(sender_number: '+123456789')
     incorrect_number_msg.update(receiver_number: 'abc')
+    assert_not incorrect_number_msg.save
+
+    incorrect_number_msg.update(receiver_number: '987654321')
     assert_not incorrect_number_msg.save
 
     incorrect_number_msg.update(receiver_number: '+987654321')
