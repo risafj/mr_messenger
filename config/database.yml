@@ -1,27 +1,23 @@
 # DB name is projectname_development, or _test/_production.
-development:
+
+default: &default
   adapter: mysql2
   encoding: utf8mb4
-  database: mr_messenger_development
-  pool: 5
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   username: root
   password:
+  host: '127.0.0.1'
   socket: /tmp/mysql.sock
+  port: 3306
+
+development:
+  <<: *default
+  database: mr_messenger_development
 
 test:
-  adapter: mysql2
-  encoding: utf8mb4
+  <<: *default
   database: mr_messenger_test
-  pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
 
 production:
-  adapter: mysql2
-  encoding: utf8mb4
+  <<: *default
   database: mr_messenger_production
-  pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock

@@ -7,18 +7,14 @@ jobs:
           RAILS_ENV: test
           TZ: "Asia/Tokyo"
       - image: tkuchiki/delayed-mysql
-        MYSQL_ALLOW_EMPTY_PASSWORD: yes
-        MYSQL_ROOT_PASSWORD: ''
-        MYSQL_DATABASE: mr_messenger_test
+        environment:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: mr_messenger_test
+          MYSQL_ROOT_HOST: "%"
     steps:
       - checkout
-      - restore_cache:
-          key: vision-bundle-{{ checksum "Gemfile.lock" }}
-      - run: bundle install --path vendor/bundle
-      - cache-save:
-          key: vision-bundle-{{ checksum "Gemfile.lock" }}
-          paths:
-          - vendor/bundle
+      - run: bundle install
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
