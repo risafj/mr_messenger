@@ -1,0 +1,28 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/ruby:2.5.1-node-browsers
+        environment:
+          RAILS_ENV: test
+          TZ: "Asia/Tokyo"
+      - image: tkuchiki/delayed-mysql
+        MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        MYSQL_ROOT_PASSWORD: ''
+        MYSQL_DATABASE: mr_messenger_test
+    steps:
+      - checkout
+      - restore_cache:
+          key: vision-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - cache-save:
+          key: vision-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+          - vendor/bundle
+      - run:
+          name: Wait for DB
+          command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
+      - run:
+          name: Database setup
+          command: bin/rails db:schema:load --trace
+      - run: bundle exec rails test
