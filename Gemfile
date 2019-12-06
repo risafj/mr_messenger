@@ -12,7 +12,7 @@ gem 'rails', '~> 5.2.2'
 # https://stackoverflow.com/questions/30834421/error-when-trying-to-install-app-with-mysql2-gem/39628463#39628463
 gem 'mysql2', '~> 0.5.2'
 # Use Puma as the app server
-gem 'puma', '~> 3.11'
+gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
