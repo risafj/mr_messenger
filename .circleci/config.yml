@@ -32,9 +32,38 @@ jobs:
           name: Database setup
           command: bin/rails db:schema:load --trace
       - run: bundle exec rails test
+  bundle_update_pr:
+    docker:
+      - image: circleci/ruby:2.5.3-node-browsers
+        environment:
+          RAILS_ENV: test
+          TZ: "Asia/Tokyo"
+    steps:
+      - checkout
+      - run:
+          name: Configure Bundler to use Bundler 2
+          command: |
+            echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
+            source $BASH_ENV
+            gem install bundler -N
+      - run:
+          name: Raise bundle update PR for master branch
+          command: |
+            gem install circleci-bundle-update-pr -N
+            circleci-bundle-update-pr ${BUNDLE_UPDATE_GITHUB_USERNAME} ${BUNDLE_UPDATE_GITHUB_EMAIL} master
 
 workflows:
   version: 2
   build:
     jobs:
       - build
+  bundle_update_pr:
+    triggers:
+      - schedule:
+          cron: "*/5 * * * *" # Every 5 mins
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - bundle_update_pr
