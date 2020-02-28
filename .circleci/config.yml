@@ -32,3 +32,9 @@ jobs:
           name: Database setup
           command: bin/rails db:schema:load --trace
       - run: bundle exec rails test
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
