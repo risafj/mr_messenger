@@ -50,7 +50,7 @@ jobs:
           name: Raise bundle update PR for master branch
           command: |
             gem install circleci-bundle-update-pr -N
-            circleci-bundle-update-pr ${BUNDLE_UPDATE_GITHUB_USERNAME} ${BUNDLE_UPDATE_GITHUB_EMAIL} test-circleci-scheduled-workflows
+            circleci-bundle-update-pr ${BUNDLE_UPDATE_GITHUB_USERNAME} ${BUNDLE_UPDATE_GITHUB_EMAIL} master
 
 workflows:
   version: 2
@@ -64,6 +64,6 @@ workflows:
           filters:
             branches:
               only:
-                - test-circleci-scheduled-workflows
+                - master
     jobs:
       - bundle_update_pr
