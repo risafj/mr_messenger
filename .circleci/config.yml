@@ -20,7 +20,11 @@ jobs:
             echo 'export BUNDLER_VERSION=$(cat Gemfile.lock | tail -1 | tr -d " ")' >> $BASH_ENV
             source $BASH_ENV
             gem install bundler -N
-      - run: bundle install --path vendor/bundle
+      - run:
+          name: Install gems
+          command: |
+            bundle config set path 'vendor/bundle'
+            bundle install
       - run:
           name: Wait for DB
           command: dockerize -wait tcp://127.0.0.1:3306 -timeout 1m
